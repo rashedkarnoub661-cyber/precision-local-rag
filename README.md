@@ -1,19 +1,42 @@
-This directory includes a few sample datasets to get you started.
+# 🎯 Precision Local RAG Engine with Memory & GPU Acceleration
 
-*   `california_housing_data*.csv` is California housing data from the 1990 US
-    Census; more information is available at:
-    https://docs.google.com/document/d/e/2PACX-1vRhYtsvc5eOR2FWNCwaBiKL6suIOrxJig8LcSBbmCbyYsayia_DvPOOBlXZ4CAlQ5nlDD8kTaIDRwrN/pub
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/YOUR_USERNAME/YOUR_REPO_NAME/blob/main/RAG_Notebook.ipynb)
+![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)
+![LangChain](https://img.shields.io/badge/LangChain-Community-green)
+![ChromaDB](https://img.shields.io/badge/VectorDB-ChromaDB-orange)
 
-*   `mnist_*.csv` is a small sample of the
-    [MNIST database](https://en.wikipedia.org/wiki/MNIST_database), which is
-    described at: http://yann.lecun.com/exdb/mnist/
+A high-precision Retrieval-Augmented Generation (RAG) system built with **Streamlit**, **LangChain**, **ChromaDB**, and a local **Qwen2.5-1.5B-Instruct** LLM running natively on GPU.
 
-*   `anscombe.json` contains a copy of
-    [Anscombe's quartet](https://en.wikipedia.org/wiki/Anscombe%27s_quartet); it
-    was originally described in
+Designed to prevent hallucinations, avoid API limits, and maintain context over multi-turn conversations.
 
-    Anscombe, F. J. (1973). 'Graphs in Statistical Analysis'. American
-    Statistician. 27 (1): 17-21. JSTOR 2682899.
+---
 
-    and our copy was prepared by the
-    [vega_datasets library](https://github.com/altair-viz/vega_datasets/blob/4f67bdaad10f45e3549984e17e1b3088c731503d/vega_datasets/_data/anscombe.json).
+## 🌟 Key Features
+
+- **100% Local Inference:** Runs LLM (`Qwen2.5-1.5B`) directly on local GPU (CUDA) with zero external API dependencies.
+- **Precision Chunking:** Uses `RecursiveCharacterTextSplitter` with small chunk size (250 chars / 40 overlap) optimized for dense structured PDFs (CVs, Anabin degree evaluations, technical papers).
+- **MMR Retrieval:** Max Marginal Relevance search via ChromaDB ensures context diversity and reduces redundant chunks.
+- **Multi-Turn Chat History:** Integrates contextual memory across follow-up queries without payload bloat.
+- **Clean Workspace Manager:** Instant memory reset and file-uploader dynamic key reset mechanism.
+
+---
+
+## 🏗️ System Architecture
+
+```text
+[ PDF Upload ]
+      │
+      ▼
+[ PyPDFLoader ] ──► [ Precision Chunking (250/40) ]
+                              │
+                              ▼
+                 [ MiniLM-L6-v2 Embeddings ]
+                              │
+                              ▼
+                   [ ChromaDB Vector Store ]
+                              │
+            ┌─────────────────┴─────────────────┐
+            │ MMR Retrieval (k=4, fetch_k=10)   │
+            └─────────────────┬─────────────────┘
+                              ▼
+            [ Local Qwen2.5-1.5B Model on GPU ] ──► [ Precise Response ]
