@@ -1,6 +1,6 @@
 # 🎯 Precision Local RAG Engine with Memory & GPU Acceleration
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rashedkarnoub661-cyber/precision-local-rag/blob/main/Untitled27.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rashedkarnoub661-cyber/precision-local-rag/blob/main/RAG_Notebook.ipynb)
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)
 ![LangChain](https://img.shields.io/badge/LangChain-Community-green)
 ![ChromaDB](https://img.shields.io/badge/VectorDB-ChromaDB-orange)
